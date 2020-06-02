@@ -5,14 +5,13 @@
 #include <thread>
 #include <cstdarg>
 
-/// API
+// API
 namespace IPC
 {
-/// IPC Message Queue
+// IPC Message Queue
 struct MessageEntry
 {
-	MessageEntry()
-	{ }
+	MessageEntry() = default;
 
 	explicit MessageEntry(const wchar_t* String)
 	{
@@ -23,6 +22,7 @@ struct MessageEntry
 	wchar_t String[StringSize];
 };
 
+//----------------------------------------------------------------------------------
 template< typename QueueType, std::size_t PoolSize >
 class AtomicQueue
 {
@@ -36,8 +36,7 @@ public:
 		Tail(0)
 	{ }
 
-	~AtomicQueue()
-	{ }
+	~AtomicQueue() = default;
 
 	void Enqueue(const Type& Entry)
 	{
@@ -79,9 +78,7 @@ public:
 	}
 
 private:
-	std::array<Type, MaxSize> Entries = {
-		Type()
-	};
+	std::array<Type, MaxSize> Entries = { Type() };
 	std::size_t Head = 0;
 	std::size_t Tail = 0;
 	std::atomic_flag Mutex = ATOMIC_FLAG_INIT;
